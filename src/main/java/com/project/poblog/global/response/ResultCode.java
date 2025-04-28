@@ -28,6 +28,7 @@ public enum ResultCode {
     // 2000번대
     TEST_ERROR(HttpStatus.BAD_REQUEST, 2000, "예외 테스트입니다.")
 
+    // 3000번
     ;
 
     private final HttpStatus status;

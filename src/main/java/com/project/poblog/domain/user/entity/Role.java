@@ -1,7 +1,5 @@
-package com.project.poblog.domain.user;
+package com.project.poblog.domain.user.entity;
 
-import com.project.poblog.global.exception.GlobalException;
-import com.project.poblog.global.response.ResultCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.project.poblog.domain.user;
+package com.project.poblog.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter @Setter
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
