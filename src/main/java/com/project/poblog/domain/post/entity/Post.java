@@ -1,4 +1,4 @@
-package com.project.poblog.domain.post;
+package com.project.poblog.domain.post.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

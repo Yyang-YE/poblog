@@ -1,14 +1,13 @@
-package com.project.poblog.dto.user.request;
+package com.project.poblog.domain.user.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class JoinReq {
-
+public class JoinRes {
     private String email;
-    private String password;
-    private String name;
     private String nickname;
 }

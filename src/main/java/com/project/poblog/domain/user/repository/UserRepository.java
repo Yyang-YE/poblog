@@ -1,7 +1,7 @@
-package com.project.poblog.repository.user;
+package com.project.poblog.domain.user.repository;
 
 
-import com.project.poblog.domain.user.User;
+import com.project.poblog.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
