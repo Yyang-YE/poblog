@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginRes {
     private String nickname;
+    private String accessToken;
+    private String refreshToken;
 }

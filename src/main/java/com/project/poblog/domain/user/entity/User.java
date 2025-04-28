@@ -6,11 +6,11 @@ import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
