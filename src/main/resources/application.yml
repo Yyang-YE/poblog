@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+    defer-datasource-initialization: true
+    sql:
+      init:
+        mode: always
+        encoding: UTF-8
+  jwt:
+    secret:
+      key: 1bf31b25b9ce00db3267ae362feebdd5e8e56a189cf211744c7c6715157fc69c86d1eed7a7353ca5b4622d93aa09c74a4c9eef0f5ca30e17ce8855ed5c503777
+
