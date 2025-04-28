@@ -1,4 +1,4 @@
-package com.project.poblog.repository.user;
+package com.project.poblog.domain.user.repository;
 
 
 import com.project.poblog.domain.user.entity.User;

@@ -1,4 +1,4 @@
-package com.project.poblog.dto.user.request;
+package com.project.poblog.domain.user.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

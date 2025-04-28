@@ -1,9 +1,9 @@
-package com.project.poblog.dto.user;
+package com.project.poblog.domain.user.dto;
 
 import com.project.poblog.domain.user.entity.User;
-import com.project.poblog.dto.user.request.JoinReq;
-import com.project.poblog.dto.user.response.LoginRes;
-import com.project.poblog.dto.user.response.JoinRes;
+import com.project.poblog.domain.user.dto.request.JoinReq;
+import com.project.poblog.domain.user.dto.response.LoginRes;
+import com.project.poblog.domain.user.dto.response.JoinRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
