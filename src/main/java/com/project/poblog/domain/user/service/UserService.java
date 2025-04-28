@@ -1,12 +1,12 @@
-package com.project.poblog.service.user;
+package com.project.poblog.domain.user.service;
 
-import com.project.poblog.domain.user.User;
-import com.project.poblog.dto.user.UserMapper;
-import com.project.poblog.dto.user.request.LoginReq;
-import com.project.poblog.dto.user.request.JoinReq;
-import com.project.poblog.dto.user.response.LoginRes;
-import com.project.poblog.dto.user.response.JoinRes;
-import com.project.poblog.repository.user.UserRepository;
+import com.project.poblog.domain.user.entity.User;
+import com.project.poblog.domain.user.dto.UserMapper;
+import com.project.poblog.domain.user.dto.request.LoginReq;
+import com.project.poblog.domain.user.dto.request.JoinReq;
+import com.project.poblog.domain.user.dto.response.LoginRes;
+import com.project.poblog.domain.user.dto.response.JoinRes;
+import com.project.poblog.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

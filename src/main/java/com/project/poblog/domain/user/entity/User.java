@@ -1,15 +1,14 @@
-package com.project.poblog.domain.user;
+package com.project.poblog.domain.user.entity;
 
+import com.project.poblog.domain.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Getter @Setter
-public class User {
+@Getter
+@NoArgsConstructor
+public class User extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "user_id")
