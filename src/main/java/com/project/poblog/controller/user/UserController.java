@@ -1,7 +1,9 @@
 package com.project.poblog.controller.user;
 
 import com.project.poblog.domain.user.dto.request.JoinReq;
+import com.project.poblog.domain.user.dto.request.LoginReq;
 import com.project.poblog.domain.user.dto.response.JoinRes;
+import com.project.poblog.domain.user.dto.response.LoginRes;
 import com.project.poblog.global.response.CommonResponse;
 import com.project.poblog.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,5 +26,10 @@ public class UserController {
     @PostMapping("/join")
     public CommonResponse<JoinRes> join(@RequestBody JoinReq joinReq) {
         return CommonResponse.success(userService.join(joinReq));
+    }
+
+    @PostMapping("/login")
+    public CommonResponse<LoginRes> login(@RequestBody LoginReq loginReq) {
+        return CommonResponse.success(userService.login(loginReq));
     }
 }

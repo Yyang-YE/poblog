@@ -6,7 +6,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
 

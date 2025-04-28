@@ -22,3 +22,7 @@ spring:
       init:
         mode: always
         encoding: UTF-8
+
+
+jwt:
+  secret: ${secret}
