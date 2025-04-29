@@ -14,6 +14,7 @@ public enum Role {
 
 	private final String label;
 
+
 	public static Role map(String label) {
 		return Arrays.stream(values())
 			.filter(r -> r.label.equals(label))

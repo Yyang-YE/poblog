@@ -25,12 +25,13 @@ public class JwtAuthenticationProvider {
 
     private SecretKey key;
 
+
     @PostConstruct
     public void init(){
         key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String getUserIdFromToken(final String token) {
+    public String getUserEmailFromToken(final String token) {
         return getClaim(token, Claims::getSubject);
     }
 
@@ -78,21 +79,22 @@ public class JwtAuthenticationProvider {
     }
 
 
-
-    public String doGenerateAccessToken(final String userId, final Map<String, Object> claims) {
+    public String doGenerateAccessToken(final String email, final Map<String, Object> claims) {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setId(userId)
+                .setSubject(email)
+                .setId(UUID.randomUUID().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+ JWT_EXPIRATION_TIME))
                 .signWith(key)
                 .compact();
     }
 
-    public String doGenerateRefreshToken(final String userId) {
+    public String doGenerateRefreshToken(final String email) {
         return Jwts.builder()
-                .setId(userId)
+                .setSubject(email)
+                .setId(UUID.randomUUID().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+JWT_REFRESH_TIME)) //하루
                 .signWith(key)

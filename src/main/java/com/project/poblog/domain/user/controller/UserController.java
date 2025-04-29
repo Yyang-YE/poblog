@@ -1,9 +1,11 @@
-package com.project.poblog.controller.user;
+package com.project.poblog.domain.user.controller;
 
 import com.project.poblog.domain.user.dto.request.JoinReq;
 import com.project.poblog.domain.user.dto.request.LoginReq;
+import com.project.poblog.domain.user.dto.request.UpdateReq;
 import com.project.poblog.domain.user.dto.response.JoinRes;
 import com.project.poblog.domain.user.dto.response.LoginRes;
+import com.project.poblog.domain.user.dto.response.UpdateRes;
 import com.project.poblog.global.response.CommonResponse;
 import com.project.poblog.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,5 +33,10 @@ public class UserController {
     @PostMapping("/login")
     public CommonResponse<LoginRes> login(@RequestBody LoginReq loginReq) {
         return CommonResponse.success(userService.login(loginReq));
+    }
+
+    @PutMapping("/update")
+    public CommonResponse<UpdateRes> update(@RequestBody UpdateReq updateReq) {
+        return CommonResponse.success(userService.update(updateReq));
     }
 }
