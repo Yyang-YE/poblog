@@ -1,4 +1,4 @@
-package com.project.poblog.controller.user;
+package com.project.poblog.domain.user.controller;
 
 import com.project.poblog.domain.user.dto.request.JoinReq;
 import com.project.poblog.domain.user.dto.request.LoginReq;
