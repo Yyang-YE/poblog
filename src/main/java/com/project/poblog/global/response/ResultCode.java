@@ -26,9 +26,10 @@ public enum ResultCode {
     UNSUPPORTED_REQUEST(HttpStatus.NOT_FOUND, 1015, "존재하지 않는 요청입니다."),
 
     // 2000번대
-    TEST_ERROR(HttpStatus.BAD_REQUEST, 2000, "예외 테스트입니다.")
+    TEST_ERROR(HttpStatus.BAD_REQUEST, 2000, "예외 테스트입니다."),
 
-    // 3000번
+    // 게시글 3000번대
+    NOT_FOUND_POST(HttpStatus.BAD_REQUEST, 3000, "존재하지 않는 게시글 입니다.")
     ;
 
     private final HttpStatus status;
