@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JoinRes {
+public class JoinUserRes {
     private String email;
     private String nickname;
 }

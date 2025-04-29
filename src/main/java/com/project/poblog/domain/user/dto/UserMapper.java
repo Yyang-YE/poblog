@@ -1,10 +1,8 @@
 package com.project.poblog.domain.user.dto;
 
-import com.project.poblog.domain.user.dto.response.UpdateRes;
+import com.project.poblog.domain.user.dto.response.*;
 import com.project.poblog.domain.user.entity.User;
-import com.project.poblog.domain.user.dto.request.JoinReq;
-import com.project.poblog.domain.user.dto.response.LoginRes;
-import com.project.poblog.domain.user.dto.response.JoinRes;
+import com.project.poblog.domain.user.dto.request.JoinUserReq;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,13 +10,16 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
     @Mapping(target = "role", expression = "java(com.project.poblog.domain.user.entity.Role.MEMBER)")
-    User toEntity(JoinReq request);
+    User toEntity(JoinUserReq request);
 
-    JoinRes toRegisterResponse(User user);
+    JoinUserRes toRegisterResponse(User user);
 
     @Mapping(target = "refreshToken", ignore = true)
     @Mapping(target = "accessToken", ignore = true)
-    LoginRes toLoginUserResponse(User user);
+    LoginUserRes toLoginUserResponse(User user);
 
-    UpdateRes toUpdateUserResponse(User user);
+    UpdateUserRes toUpdateUserResponse(User user);
+
+    GetUserRes toGetUserResponse(User user);
+
 }
