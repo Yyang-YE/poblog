@@ -1,10 +1,10 @@
 package com.project.poblog.domain.user.dto;
 
+import com.project.poblog.domain.user.dto.response.UpdateRes;
 import com.project.poblog.domain.user.entity.User;
 import com.project.poblog.domain.user.dto.request.JoinReq;
 import com.project.poblog.domain.user.dto.response.LoginRes;
 import com.project.poblog.domain.user.dto.response.JoinRes;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -19,4 +19,6 @@ public interface UserMapper {
     @Mapping(target = "refreshToken", ignore = true)
     @Mapping(target = "accessToken", ignore = true)
     LoginRes toLoginUserResponse(User user);
+
+    UpdateRes toUpdateUserResponse(User user);
 }
