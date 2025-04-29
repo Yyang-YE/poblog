@@ -1,14 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://localhost:3306/poblog #${DB_URL}
+    username: root #${DB_USERNAME}
+    password: a303303 #${DB_PASSWORD}
 
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -23,6 +23,5 @@ spring:
         mode: always
         encoding: UTF-8
 
-
 jwt:
-  secret: ${secret}
+  secret: V3ryS3cur3JwtS3cr3tKeyForPoblog2025!

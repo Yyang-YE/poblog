@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -39,9 +40,11 @@ public class LoginAuthenticationFilter extends OncePerRequestFilter {
 
         Authentication auth = new UsernamePasswordAuthentication(username, password);
         authenticationManager.authenticate(auth);
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
         // 한번 읽은 입력 스트림을 다시 사용할 수 있도록 요청 래핑
         CachedBodyHttpServletRequest rebuildRequest = new CachedBodyHttpServletRequest(request, bodyBytes);
+
         // 다음 필터로 요청 전달
         filterChain.doFilter(rebuildRequest, response);
     }

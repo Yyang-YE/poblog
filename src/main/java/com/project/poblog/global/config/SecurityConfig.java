@@ -1,5 +1,6 @@
 package com.project.poblog.global.config;
 
+import com.project.poblog.global.auth.authenticationfilter.JwtAuthenticationFilter;
 import com.project.poblog.global.auth.authenticationfilter.LoginAuthenticationFilter;
 import com.project.poblog.global.auth.authenticationprovider.LoginAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -40,22 +42,27 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector, LoginAuthenticationProvider loginAuthenticationProvider, LoginAuthenticationFilter loginAuthenticationFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector,
+                                                   LoginAuthenticationFilter loginAuthenticationFilter,
+                                                   JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
 
         MvcRequestMatcher[] permitWhiteList = {
-                mvc.pattern("/login"),
+                mvc.pattern("/user/update")
         };
 
         http
                 .addFilterBefore(loginAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //JWT를 사용하기 때문에 세션 미사용
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(permitWhiteList).authenticated()
+                        .anyRequest().permitAll());
 
         return http.build();
     }
