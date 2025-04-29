@@ -1,8 +1,10 @@
 package com.project.poblog.domain.user.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class UpdatePasswordRes {
+@AllArgsConstructor
+public class UpdatePasswordUserRes {
     boolean success;
 }

@@ -1,26 +1,19 @@
 package com.project.poblog.domain.user.service;
 
-import com.project.poblog.domain.user.dto.request.UpdatePasswordReq;
-import com.project.poblog.domain.user.dto.request.UpdateReq;
-import com.project.poblog.domain.user.dto.response.UpdatePasswordRes;
-import com.project.poblog.domain.user.dto.response.UpdateRes;
+import com.project.poblog.domain.user.dto.request.*;
+import com.project.poblog.domain.user.dto.response.*;
 import com.project.poblog.domain.user.entity.User;
 import com.project.poblog.domain.user.dto.UserMapper;
-import com.project.poblog.domain.user.dto.request.LoginReq;
-import com.project.poblog.domain.user.dto.request.JoinReq;
-import com.project.poblog.domain.user.dto.response.LoginRes;
-import com.project.poblog.domain.user.dto.response.JoinRes;
 import com.project.poblog.domain.user.repository.UserRepository;
-import com.project.poblog.global.auth.authentication.UsernamePasswordAuthentication;
 import com.project.poblog.global.auth.authenticationprovider.JwtAuthenticationProvider;
 import com.project.poblog.global.auth.refreshtoken.domain.RefreshToken;
-import com.project.poblog.global.config.SecurityConfig;
 import com.project.poblog.global.exception.GlobalException;
 import com.project.poblog.global.response.ResultCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 
@@ -32,7 +25,8 @@ public class UserService {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public JoinRes join(JoinReq registerUserRequest) {
+    @Transactional
+    public JoinUserRes joinUser(JoinUserReq registerUserRequest) {
         User user = userMapper.toEntity(registerUserRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -40,7 +34,8 @@ public class UserService {
         return userMapper.toRegisterResponse(saveUser);
     }
 
-    public LoginRes login(LoginReq loginUserRequest) {
+    @Transactional(readOnly = true)
+    public LoginUserRes loginUser(LoginUserReq loginUserRequest) {
 
         User user = userRepository.findByEmail(loginUserRequest.getEmail()).orElseThrow(()->
                 new GlobalException(ResultCode.NOT_FOUND_USER));
@@ -53,31 +48,66 @@ public class UserService {
         String refreshToken = "Bearer "+ jwtAuthenticationProvider.doGenerateRefreshToken(loginUserRequest.getEmail());
         RefreshToken.putRefreshToken(refreshToken,user.getEmail());
 
-
-        LoginRes res = userMapper.toLoginUserResponse(user);
+        LoginUserRes res = userMapper.toLoginUserResponse(user);
         res.setAccessToken(accessToken);
         res.setRefreshToken(refreshToken);
-
 
         return res;
     }
 
-    public UpdateRes update(UpdateReq updateUserRequest) {
+    @Transactional
+    public UpdateUserRes updateUser(UpdateUserReq updateUserRequest) {
+        // SCH에서 유저 이메일 정보 획득
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // 유저 정보 확인
         User user = userRepository.findByEmail(email).orElseThrow(() ->
                 new GlobalException(ResultCode.NOT_FOUND_USER)
         );
+
+        // 새로운 패스워드로 업데이트
         user.updateInfo(updateUserRequest.getName(), updateUserRequest.getNickname());
         return userMapper.toUpdateUserResponse(user);
     }
 
-    public UpdatePasswordRes updatePassword(UpdatePasswordReq updatePasswordReq) {
+    @Transactional
+    public UpdatePasswordUserRes updatePasswordUser(UpdatePasswordUserReq updatePasswordReq) {
+        // SCH에서 유저 이메일 정보 획득
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // 유저 정보 확인
         User user = userRepository.findByEmail(email).orElseThrow(() ->
                 new GlobalException(ResultCode.NOT_FOUND_USER)
         );
+
+        // 새로운 패스워드로 업데이트
         user.updatePassword(updatePasswordReq.getNewPassword());
-        return userMapper.toUpdatePasswordResponse(user);
+        return new UpdatePasswordUserRes(true);
+    }
+
+    @Transactional
+    public DeleteUserRes deleteUser(DeleteUserReq deleteReq) {
+        // SCH에서 유저 이메일 정보 획득
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // 유저 정보 확인
+        User user = userRepository.findByEmail(email).orElseThrow( () ->
+                new GlobalException(ResultCode.NOT_FOUND_USER) );
+
+        // 유저 삭제
+        userRepository.delete(user);
+        return new DeleteUserRes(true);
+    }
+
+    @Transactional(readOnly = true)
+    public GetUserRes getUser(){
+        // SCH에서 유저 이메일 정보 획득
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // 유저 정보 확인
+        User user = userRepository.findByEmail(email).orElseThrow( () -> new GlobalException(ResultCode.NOT_FOUND_USER));
+
+        return userMapper.toGetUserResponse(user);
     }
 
 }

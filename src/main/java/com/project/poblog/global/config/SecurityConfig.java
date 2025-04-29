@@ -2,7 +2,7 @@ package com.project.poblog.global.config;
 
 import com.project.poblog.global.auth.authenticationfilter.JwtAuthenticationFilter;
 import com.project.poblog.global.auth.authenticationfilter.LoginAuthenticationFilter;
-import com.project.poblog.global.auth.authenticationfilter.UpdatePasswordAuthenticationFilter;
+import com.project.poblog.global.auth.authenticationfilter.PasswordAuthenticationFilter;
 import com.project.poblog.global.auth.authenticationprovider.LoginAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,12 +44,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector,
                                                    LoginAuthenticationFilter loginAuthenticationFilter,
                                                    JwtAuthenticationFilter jwtAuthenticationFilter,
-                                                   UpdatePasswordAuthenticationFilter updatePasswordAuthenticationFilter) throws Exception {
+                                                   PasswordAuthenticationFilter updatePasswordAuthenticationFilter) throws Exception {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
 
         MvcRequestMatcher[] permitWhiteList = {
                 mvc.pattern("/user/update"),
-                mvc.pattern("/user/update/password")
+                mvc.pattern("/user/update/password"),
+                mvc.pattern("/user/delete"),
+                mvc.pattern("/user/get"),
+                
+                mvc.pattern("/post"),
+                mvc.pattern("/post/{postId}")
+
         };
 
         http
