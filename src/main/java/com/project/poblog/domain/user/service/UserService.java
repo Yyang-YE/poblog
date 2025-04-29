@@ -1,6 +1,8 @@
 package com.project.poblog.domain.user.service;
 
+import com.project.poblog.domain.user.dto.request.UpdatePasswordReq;
 import com.project.poblog.domain.user.dto.request.UpdateReq;
+import com.project.poblog.domain.user.dto.response.UpdatePasswordRes;
 import com.project.poblog.domain.user.dto.response.UpdateRes;
 import com.project.poblog.domain.user.entity.User;
 import com.project.poblog.domain.user.dto.UserMapper;
@@ -67,6 +69,15 @@ public class UserService {
         );
         user.updateInfo(updateUserRequest.getName(), updateUserRequest.getNickname());
         return userMapper.toUpdateUserResponse(user);
+    }
+
+    public UpdatePasswordRes updatePassword(UpdatePasswordReq updatePasswordReq) {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                new GlobalException(ResultCode.NOT_FOUND_USER)
+        );
+        user.updatePassword(updatePasswordReq.getNewPassword());
+        return userMapper.toUpdatePasswordResponse(user);
     }
 
 }

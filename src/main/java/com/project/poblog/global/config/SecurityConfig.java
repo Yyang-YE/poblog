@@ -2,11 +2,11 @@ package com.project.poblog.global.config;
 
 import com.project.poblog.global.auth.authenticationfilter.JwtAuthenticationFilter;
 import com.project.poblog.global.auth.authenticationfilter.LoginAuthenticationFilter;
+import com.project.poblog.global.auth.authenticationfilter.UpdatePasswordAuthenticationFilter;
 import com.project.poblog.global.auth.authenticationprovider.LoginAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -44,16 +43,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector,
                                                    LoginAuthenticationFilter loginAuthenticationFilter,
-                                                   JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+                                                   JwtAuthenticationFilter jwtAuthenticationFilter,
+                                                   UpdatePasswordAuthenticationFilter updatePasswordAuthenticationFilter) throws Exception {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
 
         MvcRequestMatcher[] permitWhiteList = {
-                mvc.pattern("/user/update")
+                mvc.pattern("/user/update"),
+                mvc.pattern("/user/update/password")
         };
 
         http
                 .addFilterBefore(loginAuthenticationFilter, BasicAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterAfter(updatePasswordAuthenticationFilter, JwtAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

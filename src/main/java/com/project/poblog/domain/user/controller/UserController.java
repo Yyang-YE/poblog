@@ -2,9 +2,11 @@ package com.project.poblog.domain.user.controller;
 
 import com.project.poblog.domain.user.dto.request.JoinReq;
 import com.project.poblog.domain.user.dto.request.LoginReq;
+import com.project.poblog.domain.user.dto.request.UpdatePasswordReq;
 import com.project.poblog.domain.user.dto.request.UpdateReq;
 import com.project.poblog.domain.user.dto.response.JoinRes;
 import com.project.poblog.domain.user.dto.response.LoginRes;
+import com.project.poblog.domain.user.dto.response.UpdatePasswordRes;
 import com.project.poblog.domain.user.dto.response.UpdateRes;
 import com.project.poblog.global.response.CommonResponse;
 import com.project.poblog.domain.user.service.UserService;
@@ -38,5 +40,10 @@ public class UserController {
     @PutMapping("/update")
     public CommonResponse<UpdateRes> update(@RequestBody UpdateReq updateReq) {
         return CommonResponse.success(userService.update(updateReq));
+    }
+
+    @PutMapping("/update/password")
+    public CommonResponse<UpdatePasswordRes> updatePassword(@RequestBody UpdatePasswordReq updatePasswordReq) {
+        return CommonResponse.success(userService.updatePassword(updatePasswordReq));
     }
 }

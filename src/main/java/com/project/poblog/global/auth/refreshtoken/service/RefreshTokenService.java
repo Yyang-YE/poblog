@@ -1,7 +1,7 @@
 package com.project.poblog.global.auth.refreshtoken.service;
 
-import com.project.poblog.global.auth.refreshtoken.dto.RefreshTokenDto;
+import com.project.poblog.global.auth.refreshtoken.dto.RefreshTokenRes;
 
 public interface RefreshTokenService {
-    RefreshTokenDto refreshToken(final String refreshToken);
+    RefreshTokenRes refreshToken(final String refreshToken);
 }

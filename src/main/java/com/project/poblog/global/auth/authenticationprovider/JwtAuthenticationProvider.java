@@ -25,7 +25,6 @@ public class JwtAuthenticationProvider {
 
     private SecretKey key;
 
-
     @PostConstruct
     public void init(){
         key = Keys.hmacShaKeyFor(secret.getBytes());
@@ -74,7 +73,7 @@ public class JwtAuthenticationProvider {
         } catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             throw new GlobalException(ResultCode.INVALID_TOKEN);
         } catch (ExpiredJwtException e) {
-            throw new GlobalException(ResultCode.ACCESS_TOKEN_EXPIRED);
+            throw new GlobalException(ResultCode.REFRESH_TOKEN_EXPIRED);
         }
     }
 
